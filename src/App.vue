@@ -1,10 +1,15 @@
-<template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-    <router-link :to="{ name: 'Jest' }">Jest</router-link>
-  </div>
-  <router-view/>
+<template lang='pug'>
+#nav
+  router-link(
+    v-for="(nav, index) in navList"
+    :to="nav.path"
+    :class="tw(\
+      'px-5',\
+      'mx-2',\
+      index + 1 !== navList.length && 'border(r-1 gray-500)',\
+    )"
+  ) {{ nav.name }}
+<router-view/>
 </template>
 
 <style>
@@ -29,3 +34,28 @@
   color: #42b983;
 }
 </style>
+
+<script>
+export default {
+  name: 'app',
+  setup () {
+    const navList = [
+      {
+        name: 'Home',
+        path: '/'
+      },
+      {
+        name: 'About',
+        path: '/About'
+      },
+      {
+        name: 'Jest',
+        path: '/Jest'
+      }
+    ]
+    return {
+      navList
+    }
+  }
+}
+</script>

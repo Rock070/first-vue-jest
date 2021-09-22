@@ -1,5 +1,5 @@
 <template lang="pug">
-  TodoList
+TodoList
 </template>
 
 <script>
