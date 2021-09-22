@@ -6,7 +6,9 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "test:watch": "yarn test:unit --watch",
+    "lint": "vue-cli-service lint",
+    "reset": "rm -rf node_modules && yarn install"
   },
   "dependencies": {
     "core-js": "^3.6.5",

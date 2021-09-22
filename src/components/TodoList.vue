@@ -78,7 +78,7 @@
 import { ref, computed } from 'vue'
 
 export default {
-  name: 'todo-list',
+  name: 'TodoList',
   setup () {
     /**
      * @constant {Array} rawTodoList
