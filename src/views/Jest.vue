@@ -1,0 +1,15 @@
+<template lang="pug">
+  TodoList
+</template>
+
+<script>
+// @ is an alias to /src
+import TodoList from '@/components/TodoList.vue'
+
+export default {
+  name: 'Jest',
+  components: {
+    TodoList
+  }
+}
+</script>
