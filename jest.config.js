@@ -9,6 +9,14 @@ module.exports = {
   testMatch: [
     '<rootDir>/**/*.spec.js'
   ],
+  globals: {
+    'vue-jest': {
+      pug: {
+        doctype: 'html'
+      }
+    }
+  },
+  setupFiles: ['<rootDir>/jest.init.js'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1'
   }
