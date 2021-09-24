@@ -6,13 +6,13 @@ describe('TodoList.vue', () => {
     const wrapper = mount(TodoList)
     expect(wrapper.find('input').text()).toBe('')
   })
-  it('未完成清單初始值應為一個項目', () => {
+  it('未完成清單初始值應為零個項目', () => {
     const wrapper = mount(TodoList)
-    expect(wrapper.vm.todoList.fullFill.length).toBe(1)
+    expect(wrapper.vm.todoList.fullFill.length).toBe(0)
   })
-  it('已完成清單初始值應為一個項目', () => {
+  it('已完成清單初始值應為兩個項目', () => {
     const wrapper = mount(TodoList)
-    expect(wrapper.vm.todoList.unFullFill.length).toBe(1)
+    expect(wrapper.vm.todoList.unFullFill.length).toBe(2)
   })
   it('當輸入框有值，按下 Enter，未完成項目會多一個項目，且輸入框會清空', () => {
     const wrapper = mount(TodoList)
@@ -39,19 +39,22 @@ describe('TodoList.vue', () => {
   })
   it('未完成清單中項目點選勾勾 icon 後，已完成清單會多一項目', () => {
     const wrapper = mount(TodoList)
-    const unFullFillItem = wrapper.find('[id="unFullFill"]').find('[index="0"]')
+    const unFullFillItem = wrapper.find('[id="unFullFill"]')
     const lengthBefore = wrapper.vm.todoList.fullFill.length
 
     unFullFillItem.find('.change__status').trigger('click')
     const lengthAfter = wrapper.vm.todoList.fullFill.length
     expect(lengthAfter).toBe(lengthBefore + 1)
   })
-  it('已完成清單中項目點選叉叉 icon 後，未完成清單會多一項目', () => {
+  it('已完成清單中項目點選叉叉 icon 後，未完成清單會多一項目', async () => {
     const wrapper = mount(TodoList)
-    const fullFillItem = wrapper.find('[id="fullFill"]')
+    const unFullFillItem = wrapper.find('[id="unFullFill"]')
+    unFullFillItem.find('.change__status').trigger('click')
 
+    const fullFillItem = wrapper.find('[id="fullFill"]')
     const lengthBefore = wrapper.vm.todoList.unFullFill.length
-    fullFillItem.find('.remove').trigger('click')
+    await wrapper.vm.$nextTick()
+    fullFillItem.find('.change__status').trigger('click')
     const lengthAfter = wrapper.vm.todoList.unFullFill.length
     expect(lengthAfter).toBe(lengthBefore + 1)
   })

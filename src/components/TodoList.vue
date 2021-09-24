@@ -83,6 +83,7 @@
 
 <script>
 import { ref, computed } from 'vue'
+// import axios from 'axios'
 
 export default {
   name: 'TodoList',
@@ -93,16 +94,7 @@ export default {
         * 1: 完成
         * 2: 未完成
     */
-    const rawTodoList = ref([
-      {
-        status: 2,
-        label: '打電腦'
-      },
-      {
-        status: 1,
-        label: '打籃球'
-      }
-    ])
+    const rawTodoList = ref([])
 
     const titleList = [
       {
@@ -120,15 +112,18 @@ export default {
       unFullFill: rawTodoList.value.filter(item => item.status === 2)
     }))
 
-    const addTodo = thing => {
-      const value = thing.target.value
-      if (!value) return
+    const addTodo = (thing, isElement = true) => {
+      let value = thing
+      if (isElement) {
+        value = thing.target.value
+        if (!value) return
+        thing.target.value = ''
+      }
       const obj = {
         label: value,
         status: 2
       }
       rawTodoList.value.push(obj)
-      thing.target.value = ''
     }
 
     const changeTodoStatus = (label) => {
@@ -136,6 +131,11 @@ export default {
       item.status = item.status === 1 ? 2 : 1
     }
 
+    const init = () => {
+      addTodo('打電腦', false)
+      addTodo('打籃球', false)
+    }
+    init()
     return {
       titleList,
       todoList,
