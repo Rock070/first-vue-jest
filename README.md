@@ -20,6 +20,11 @@ yarn build
 yarn test:unit
 ```
 
+### Report your unit tests coverage
+```
+yarn test:cov
+```
+
 ### Lints and fixes files
 ```
 yarn lint
