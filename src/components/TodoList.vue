@@ -29,6 +29,7 @@
   )
 .list(
   v-for="titleItem in titleList"
+  :id="titleItem.id"
   :class="tw(\
     'mt-2',\
     'flex',\
@@ -50,6 +51,7 @@
   )
     .item(
       v-for="(item, index) in todoList[titleItem.id]"
+      :index="index"
       :class="tw(\
         'w-full',\
         'bg-yellow-200',\
@@ -59,17 +61,22 @@
       )"
     )
       div(
-        :class="tw('w-8', 'h-8', 'leading-8', 'bg-green-200')"
+        :class="tw(\
+          'w-8',\
+          'h-8',\
+          'leading-8',\
+          'bg-green-200',\
+        )"
       ) {{ index + 1 }}
       div(:class="tw('mr-4')") {{ item.label }}
       .change__status(
         :class="tw('cursor-pointer')"
-        @click="changeTodoStatus(index)"
+        @click="changeTodoStatus(item.label)"
       )
-        div(
+        .check(
           v-if="item.status === 2"
         ) ✓
-        div(
+        .remove(
           v-else
         ) ✕
 </template>
@@ -116,15 +123,16 @@ export default {
     const addTodo = thing => {
       const value = thing.target.value
       if (!value) return
-      const obj = {}
-      obj.label = value
-      obj.status = 2
+      const obj = {
+        label: value,
+        status: 2
+      }
       rawTodoList.value.push(obj)
       thing.target.value = ''
     }
 
-    const changeTodoStatus = (id) => {
-      const item = rawTodoList.value.find((item, index) => index === id)
+    const changeTodoStatus = (label) => {
+      const item = rawTodoList.value.find(item => item.label === label)
       item.status = item.status === 1 ? 2 : 1
     }
 

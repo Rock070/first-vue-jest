@@ -37,4 +37,22 @@ describe('TodoList.vue', () => {
     const lengthAfter = wrapper.vm.todoList.unFullFill.length
     expect(lengthAfter).toBe(lengthBefore)
   })
+  it('未完成清單中項目點選勾勾 icon 後，已完成清單會多一項目', () => {
+    const wrapper = mount(TodoList)
+    const unFullFillItem = wrapper.find('[id="unFullFill"]').find('[index="0"]')
+    const lengthBefore = wrapper.vm.todoList.fullFill.length
+
+    unFullFillItem.find('.change__status').trigger('click')
+    const lengthAfter = wrapper.vm.todoList.fullFill.length
+    expect(lengthAfter).toBe(lengthBefore + 1)
+  })
+  it('已完成清單中項目點選叉叉 icon 後，未完成清單會多一項目', () => {
+    const wrapper = mount(TodoList)
+    const fullFillItem = wrapper.find('[id="fullFill"]')
+
+    const lengthBefore = wrapper.vm.todoList.unFullFill.length
+    fullFillItem.find('.remove').trigger('click')
+    const lengthAfter = wrapper.vm.todoList.unFullFill.length
+    expect(lengthAfter).toBe(lengthBefore + 1)
+  })
 })
